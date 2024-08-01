@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const process = require('process');
+const { log } = require('console');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
@@ -33,6 +34,7 @@ fs
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
+    console.log(typeof db[modelName]);
     db[modelName].associate(db);
   }
 });
