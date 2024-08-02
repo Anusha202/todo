@@ -2,7 +2,7 @@
 const { where } = require('sequelize');
 const { User } = require('../models')
 const userSevice = require('../services/userServices')
-const jsonwebtoken= require('jsonwebtoken')
+const jwt= require('jsonwebtoken')
 
 
 exports.register = async(req,res)=>{
@@ -57,5 +57,24 @@ exports.login = async(req,res)=>{
     catch(err){
         console.log(err)
         return res.status(400).json(err)
+    }
+}
+exports.forgetPassword = async(req,res)=>{
+    try{
+        const {email} = req.body
+        let user = await User.findOne({
+            where :{email}
+        })
+        if(!user){
+            return res.status(404).json({error:"Email Not Found. Please register your email."})
+        }
+        const token = await userSevice.generateToken(user)
+        if(!token){
+            return res.status(400).json({error: "Token not generated"})
+        }
+        res.json({token})
+    }
+    catch(err){
+        res.status(500).json({message:err.message})
     }
 }

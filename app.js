@@ -34,6 +34,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 
+
 app.use((req,err,res,next)=>{
     res.status(err.status || 500).json({error:err.message})
 })
@@ -50,5 +51,11 @@ app.post('/users', async(req,res)=>{
         return res.status(500).json(err)
     }
 })
+
+const UserRoute= require('./routes/userRoute')
+const TodoRoute= require('./routes/todolistRoute')
+
+app.use(UserRoute)
+app.use(TodoRoute)
 
 module.exports= app;

@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const { expressjwt } = require('express-jwt');
 const jwt = require('jsonwebtoken')
 
 // hashing of user password
@@ -29,8 +28,3 @@ exports.generateToken = async(user)=>{
     return token
 }
 
-// authorization of user
-exports.authorization = expressjwt({
-    secret: process.env.JWT_SECRET,
-    algorithms: ['HS256']
-})
